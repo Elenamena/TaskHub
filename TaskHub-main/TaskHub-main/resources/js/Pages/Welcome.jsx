@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 function Welcome() {
@@ -7,7 +8,7 @@ function Welcome() {
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editingText, setEditingText] = useState("");
 
-  // Añadir tarea nueva
+  // Añadir tarea
   const addTask = () => {
     const title = newTask.trim();
     if (title === "") return;
@@ -20,7 +21,7 @@ function Welcome() {
     setNewTask("");
   };
 
-  // Marcar/Desmarcar completada
+  // Marcar y desmarcar completada
   const toggleCompleted = (id) => {
     setTasks(
       tasks.map((task) =>
@@ -43,15 +44,17 @@ function Welcome() {
   const finishEditing = (id) => {
     const trimmedText = editingText.trim();
     if (trimmedText === "") {
-      setEditingTaskId(null); // si vacío, cancela edición
+      setEditingTaskId(null); // vacio: cancela edición
       setEditingText("");
       return;
     }
+
     setTasks(
       tasks.map((task) =>
         task.id === id ? { ...task, title: trimmedText } : task
       )
     );
+
     setEditingTaskId(null);
     setEditingText("");
   };
@@ -74,7 +77,7 @@ function Welcome() {
         <div>Progreso: {progress}%</div>
       </div>
 
-      {/* Input y botón Añadir */}
+      {/* Input y botón añadir */}
       <div className="flex mb-4">
         <input
           type="text"
@@ -86,6 +89,7 @@ function Welcome() {
             if (e.key === "Enter") addTask();
           }}
         />
+
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded"
           onClick={addTask}
@@ -104,6 +108,7 @@ function Welcome() {
               checked={task.completed}
               onChange={() => toggleCompleted(task.id)}
             />
+
             {editingTaskId === task.id ? (
               <input
                 type="text"
@@ -116,6 +121,7 @@ function Welcome() {
                 }}
                 autoFocus
               />
+
             ) : (
               <span
                 onClick={() => startEditing(task.id, task.title)}
@@ -126,6 +132,7 @@ function Welcome() {
                 {task.title}
               </span>
             )}
+
           </li>
         ))}
       </ul>
@@ -142,3 +149,5 @@ function Welcome() {
 }
 
 export default Welcome;
+
+
